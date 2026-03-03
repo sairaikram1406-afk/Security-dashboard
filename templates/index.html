@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Security Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script>
+        function selectOption(choice) {
+            document.getElementById("breach_check").value = choice;
+
+            document.getElementById("yesBtn").classList.remove("active");
+            document.getElementById("noBtn").classList.remove("active");
+
+            if (choice === "yes") {
+                document.getElementById("yesBtn").classList.add("active");
+            } else {
+                document.getElementById("noBtn").classList.add("active");
+            }
+        }
+
+        function setGenerate() {
+            document.getElementById("generate_flag").value = "yes";
+            document.querySelector("form").submit();
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔐 Password Security Dashboard</h1>
+
+        <form method="POST">
+
+            <div class="dual-wrapper">
+
+                <!-- ================= LEFT PANEL : GENERATOR ================= -->
+                <div class="panel-box left-panel">
+                    <h2>Generate Password</h2>
+
+                    <p style="margin-bottom: 20px; color: #94a3b8; text-align:center;">
+                        Fixed Entropy: <strong>100 Bits</strong>
+                    </p>
+
+                    <button type="button" class="generate-btn" onclick="setGenerate()">
+                        Generate Secure Password
+                    </button>
+                </div>
+
+                <!-- Divider -->
+                <div class="divider"></div>
+
+                <!-- ================= RIGHT PANEL : ANALYZE ================= -->
+                <div class="panel-box right-panel">
+                    <h2>Analyze Password</h2>
+
+                    <input 
+                        type="text" 
+                        name="password" 
+                        placeholder="Enter password"
+                        required
+                        value="{{ generated_password if generated_password else '' }}"
+                    >
+
+                    <div class="breach-box">
+                        <p>Check breach exposure?</p>
+
+                        <div class="option-buttons">
+                            <button type="button" id="yesBtn" onclick="selectOption('yes')">
+                                YES
+                            </button>
+                            <button type="button" id="noBtn" onclick="selectOption('no')">
+                                NO
+                            </button>
+                        </div>
+
+                        <input 
+                            type="hidden" 
+                            name="breach_check" 
+                            id="breach_check" 
+                            value=""
+                        >
+                    </div>
+
+                    <button type="submit">
+                        Analyze
+                    </button>
+                </div>
+
+            </div>
+
+            <input type="hidden" name="generate" id="generate_flag" value="no">
+
+        </form>
+    </div>
+</body>
+</html>

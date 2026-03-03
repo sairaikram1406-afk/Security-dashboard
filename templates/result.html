@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>🔐 Password Analysis Dashboard</h1>
+
+        <div class="result-wrapper">
+
+            <!-- ================= LEFT : ANALYSIS ================= -->
+            <div class="result-panel">
+                <h2>Analysis Result</h2>
+
+                <!-- Strength Score -->
+                <div class="card score-card">
+                    <span class="label">Strength Score</span>
+                    <span class="value">{{ result.score }} / 4</span>
+                </div>
+
+                <!-- Estimated Guesses -->
+                <div class="card guesses-card">
+                    <span class="label">Estimated Guesses</span>
+                    <span class="value">{{ result.guesses }}</span>
+                </div>
+
+                <!-- Crack Time -->
+                <div class="card crack-card">
+                    <span class="label">Estimated Crack Time</span>
+                    <span class="value">{{ result.crack_time }}</span>
+                </div>
+
+                <!-- ===== Improved Feedback Section ===== -->
+                <div class="card feedback-card">
+                    <span class="label">Security Feedback</span>
+
+                    {% if result.warning %}
+                        <div class="warning-box">
+                            ⚠ <strong>Warning:</strong>
+                            <p>{{ result.warning }}</p>
+                        </div>
+                    {% endif %}
+
+                    {% if result.suggestions %}
+                        <div class="suggestion-box">
+                            <strong>Suggestions:</strong>
+                            <ul>
+                                {% for suggestion in result.suggestions %}
+                                    <li>{{ suggestion }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    {% if not result.warning and not result.suggestions %}
+                        <div class="secure-box">
+                            ✅ This password has no major weaknesses detected.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- ================= RIGHT : BREACH ================= -->
+            {% if breach_count is not none %}
+            <div class="result-panel">
+                <h2>Breach Count</h2>
+
+                {% if breach_count > 0 %}
+                    <div class="breach-number">
+                        {{ breach_count }}
+                    </div>
+                    <p style="text-align:center;">
+                        Times Found in Data Breaches
+                    </p>
+                {% else %}
+                    <div class="breach-number">
+                        0
+                    </div>
+                    <p style="text-align:center;">
+                        Not Found in Known Breaches
+                    </p>
+                {% endif %}
+            </div>
+            {% endif %}
+
+        </div>
+
+        <!-- ===== Styled Back Button ===== -->
+        <div class="option-buttons" style="margin-top: 30px;">
+            <a href="/" style="text-decoration:none;">
+                <button type="button" class="active">
+                    Analyze Another
+                </button>
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>
