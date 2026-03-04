@@ -7,6 +7,7 @@ app = Flask(__name__)
 generator = PasswordGenerator()
 
 
+
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
