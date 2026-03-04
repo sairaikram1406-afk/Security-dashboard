@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 generator = PasswordGenerator()
 
-
+print("CI pipeline test")
 
 @app.route("/", methods=["GET", "POST"])
 def home():
