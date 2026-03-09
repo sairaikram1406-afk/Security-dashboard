@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: gunicorn security_dashboard.app:app
