@@ -4,7 +4,7 @@ from breach_checker import check_breach
 import os
 import traceback
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates", static_folder="static")
 app.config["PROPAGATE_EXCEPTIONS"] = True
 
 generator = PasswordGenerator()
