@@ -11,6 +11,9 @@ generator = PasswordGenerator()
 
 print("CI pipeline test")
 
+@app.route("/alive")
+def alive():
+    return "Server alive"
 
 @app.route("/", methods=["GET", "POST"])
 def home():
